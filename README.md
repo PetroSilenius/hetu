@@ -2,6 +2,8 @@
 
 A minimal Chrome extension that uses pure CSS to hide visible Finnish personal identity code ("Henkilotunnus") values on selected authentication pages.
 
+[![Screenshot of the extension hiding SSN values on a login page](screenshot.png)](screenshot.png)
+
 ## What it does
 
 - Injects CSS only on configured login URLs.
@@ -10,8 +12,9 @@ A minimal Chrome extension that uses pure CSS to hide visible Finnish personal i
 
 ## Supported pages
 
-- `https://userapi2.danskebank.com/prod/external/ftn/idp-oidc/connect/sign-in*`
-- `https://tunnistautuminen.suomi.fi/idp/profile/SAML2/Redirect/SSO*`
+- Suomi.fi login page
+- Danske Bank authentication page
+- S-pankki authentication page
 
 ## How it works
 
