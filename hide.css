@@ -1,0 +1,29 @@
+/* Danske Bank FTN page: mask value next to Henkilotunnus header */
+th#ssn-number + td {
+  color: transparent !important;
+}
+
+th#ssn-number + td::before {
+  content: "***********";
+  color: CanvasText;
+}
+
+/* Suomi.fi SSO page: mask strong SSN value next to hetu header */
+th[data-i18n="attribute__hetu"] + td > strong {
+  color: transparent !important;
+}
+
+th[data-i18n="attribute__hetu"] + td > strong::before {
+  content: "***********";
+  color: CanvasText;
+}
+
+/* S-Pankki FTN page: mask personal details values */
+p.form__term.u_text--bold + p.form__data.u_margin-bottom--large {
+  color: transparent !important;
+}
+
+p.form__term.u_text--bold + p.form__data.u_margin-bottom--large::before {
+  content: "***********";
+  color: CanvasText;
+}

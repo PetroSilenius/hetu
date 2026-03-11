@@ -1,0 +1,65 @@
+name: Release to Chrome Web Store
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build extension zip
+        run: zip -r extension.zip manifest.json hide.css icons
+
+      - name: Upload and publish to Chrome Web Store
+        env:
+          EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
+          CLIENT_ID: ${{ secrets.CHROME_WEB_STORE_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CHROME_WEB_STORE_CLIENT_SECRET }}
+          REFRESH_TOKEN: ${{ secrets.CHROME_WEB_STORE_REFRESH_TOKEN }}
+        run: |
+          npx chrome-webstore-upload-cli@3 upload \
+            --source extension.zip \
+            --extension-id "$EXTENSION_ID" \
+            --client-id "$CLIENT_ID" \
+            --client-secret "$CLIENT_SECRET" \
+            --refresh-token "$REFRESH_TOKEN" \
+            --auto-publish
+
+      - name: Read manifest version
+        id: version
+        run: echo "value=$(node -p \"require('./manifest.json').version\")" >> "$GITHUB_OUTPUT"
+
+      - name: Create git tag
+        env:
+          TAG: v${{ steps.version.outputs.value }}
+        run: |
+          if git ls-remote --tags origin "refs/tags/$TAG" | grep -q "$TAG"; then
+            echo "Tag $TAG already exists on remote, skipping tag creation."
+          else
+            git tag "$TAG"
+            git push origin "$TAG"
+          fi
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: v${{ steps.version.outputs.value }}
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG already exists, skipping release creation."
+          else
+            gh release create "$TAG" extension.zip --title "$TAG" --generate-notes
+          fi
