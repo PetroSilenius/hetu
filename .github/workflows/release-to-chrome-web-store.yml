@@ -40,7 +40,7 @@ jobs:
 
       - name: Read manifest version
         id: version
-        run: echo "value=$(node -p \"require('./manifest.json').version\")" >> "$GITHUB_OUTPUT"
+        run: echo "value=$(node -p 'require("./manifest.json").version')" >> "$GITHUB_OUTPUT"
 
       - name: Create git tag
         env:
