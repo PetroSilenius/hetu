@@ -26,8 +26,9 @@ It applies local CSS rules on selected authentication pages to hide visible Finn
 
 ### Supported URLs
 
-- `https://userapi2.danskebank.com/prod/external/ftn/idp-oidc/connect/sign-in*`
-- `https://tunnistautuminen.suomi.fi/idp/profile/SAML2/Redirect/SSO*`
+- `https://userapi2.danskebank.com/prod/external*`
+- `https://tunnistautuminen.suomi.fi/idp/profile*`
+- `https://online.s-pankki.fi/ftn/initSession*`
 
 ## Privacy practices (store form guidance)
 
