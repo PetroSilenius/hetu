@@ -4,6 +4,8 @@ A minimal Chrome extension that uses pure CSS to hide visible Finnish personal i
 
 [![Screenshot of the extension hiding SSN values on a login page](screenshot.png)](screenshot.png)
 
+Download it on [the Chrome web store!](https://chromewebstore.google.com/detail/hetu-hide-ssn-on-finnish/ngphgkcnedlegecmlpeapemechaeojop)
+
 ## What it does
 
 - Injects CSS only on configured login URLs.
